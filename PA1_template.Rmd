@@ -117,5 +117,5 @@ In this step we make a panel plot containing a time series plot of the 5-minute 
 ```{r, echo=TRUE}
 sql_statement <- "SELECT 1.0 * SUM(StepsImpute)/COUNT(1) AS [IntervalMeanImputeSteps], interval, isWeekday FROM impute_dat GROUP BY interval, isWeekday"
 plot_dat <- sqldf(sql_statement)
-ggplot(data = plot_dat, aes(x = plot_dat$interval, y = plot_dat$IntervalMeanImputeSteps, group = 1)) + geom_line(color="firebrick",lwd = 1) + facet_wrap(~isWeekday, ncol = 1)
+ggplot(data = plot_dat, aes(interval, IntervalMeanImputeSteps)) + geom_line(color="firebrick",lwd = 1) + facet_wrap(~isWeekday, ncol = 1)
 ```

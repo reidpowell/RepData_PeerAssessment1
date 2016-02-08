@@ -228,12 +228,12 @@ head(impute_dat)
 ```
 
 ### 2. Make a panel plot
-In this step we make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+In this step we make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). There appears to be a difference in the subjects activity between weekday and weekend days. The large weekday peak near interval 860 compared to the remaining day's lower degree of activity contrasts to the more uniform nature of the weekend activity. There doesn't appear to be as clear a maximum for weekend intervals, when inspecting visually.
 
 ```r
 sql_statement <- "SELECT 1.0 * SUM(StepsImpute)/COUNT(1) AS [IntervalMeanImputeSteps], interval, isWeekday FROM impute_dat GROUP BY interval, isWeekday"
 plot_dat <- sqldf(sql_statement)
-ggplot(data = plot_dat, aes(x = plot_dat$interval, y = plot_dat$IntervalMeanImputeSteps, group = 1)) + facet_wrap(~isWeekday, ncol = 1)
+ggplot(data = plot_dat, aes(interval, IntervalMeanImputeSteps)) + geom_line(color="firebrick",lwd = 1) + facet_wrap(~isWeekday, ncol = 1)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-14-1.png)
